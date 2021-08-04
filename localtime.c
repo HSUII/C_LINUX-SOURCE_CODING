@@ -1,3 +1,5 @@
+//구조체에 시간을 담아  시간, 분, 초 날짜로 출력하는 프로그램
+
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>

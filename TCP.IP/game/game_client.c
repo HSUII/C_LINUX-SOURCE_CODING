@@ -32,7 +32,7 @@ main()
                 return -1;
         }
         printf("설명하는 동물을 맞춰보세요! \n");
-        printf("시작하려면 '시작'을 입력해주세요 \n");
+        printf("시작하려면 'start'을 입력해주세요 \n");
         while(1){
         if((n=read(0,buffer,BUFSIZ))>0){
         scanf("%s",buffer);
@@ -46,7 +46,7 @@ main()
         }
 
         rcvBuffer[n] = '\0';
-        printf("received Data : %s\n",rcvBuffer);
+        printf("%s\n",rcvBuffer);
 
         }       }
         close(c_socket);

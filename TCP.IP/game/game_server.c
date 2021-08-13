@@ -101,6 +101,7 @@
                 if(!strcmp(rBuffer,answer)){
                                         hint = "정답입니다!\n";
                                         strcpy(Buffer,hint);
+                                        Buffer[length] = '\0';
                                         write(c_socket,Buffer,strlen(Buffer));
                                         break;
                                 }

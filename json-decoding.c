@@ -24,7 +24,7 @@ int j;
 int length;
 int docnum = 3;
 char* s;
-char* querykey;
+char querykey[50];
 int querynum;
 
 typedef struct Document_t {
@@ -63,13 +63,12 @@ typedef struct Meta_t {
 } Meta ;
 
 typedef struct DataSet_t {
-        Document    documents           [COMM_MAX]              ;
-        //Meta        meta                                                              ;
+        Document    documents           [COMM_MAX]                                      ;
         int                     objectnum                                                       ;
 } DataSet ;
 
 
-/* forward refs */
+
 
 void print_json(json_t *root);
 void print_json_aux(json_t *element, int indent);
@@ -85,7 +84,7 @@ void print_json_false(json_t *element, int indent);
 void print_json_null(json_t *element, int indent);
 void decoding(const char *key, json_t *value,int indent,int listnum);
 
-//decode struct member
+
 
 void print_json_id(json_t *element, int indent,int num);
 void print_json_place_name(json_t *element, int indent,int num);
@@ -171,67 +170,67 @@ void print_json_object(json_t *element, int indent) {
 
 void decoding(const char *key, json_t *value,int indent,int listnum){
 
-                if(strcmp(key,"id")== 0){
-                        print_json_id(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"id")== 0){
+                print_json_id(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"place_name")== 0){
-                        print_json_place_name(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"place_name")== 0){
+                print_json_place_name(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"category_group_code")== 0){
-                        print_json_group_code(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"category_group_code")== 0){
+                print_json_group_code(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"category_group_name")== 0){
-                        print_json_group_name(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"category_group_name")== 0){
+                print_json_group_name(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"category_name")== 0){
-                        print_json_category_name(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"category_name")== 0){
+                print_json_category_name(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"phone")== 0){
-                        print_json_phone(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"phone")== 0){
+                print_json_phone(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"address_name")== 0){
-                        print_json_address_name(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"address_name")== 0){
+                print_json_address_name(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"road_address_name")== 0){
-                        print_json_road_addr(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"road_address_name")== 0){
+                print_json_road_addr(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"x")== 0){
-                        print_json_x(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"x")== 0){
+                print_json_x(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"y")== 0){
-                        print_json_y(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"y")== 0){
+                print_json_y(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"place_url")== 0){
-                        print_json_place_url(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"place_url")== 0){
+                print_json_place_url(value,indent + 2,listnum);
+        }
 
-                if(strcmp(key,"distance")== 0){
-                        print_json_distance(value,indent + 2,listnum);
-                }
+        if(strcmp(key,"distance")== 0){
+                print_json_distance(value,indent + 2,listnum);
+        }
 
 
 }
 
 void print_json_id(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
+
         strcpy(list[num].id,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
 
 void print_json_place_name(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
+
         strcpy(list[num].place_name,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -239,7 +238,7 @@ void print_json_place_name(json_t *element, int indent,int num) {
 
 void print_json_group_code(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
+
         strcpy(list[num].category_group_code,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -247,21 +246,18 @@ void print_json_group_code(json_t *element, int indent,int num) {
 
 void print_json_group_name(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].category_group_name,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
 
 void print_json_category_name(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].category_name,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
 
 void print_json_phone(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].phone,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -269,7 +265,6 @@ void print_json_phone(json_t *element, int indent,int num) {
 
 void print_json_address_name(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].address_name,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -277,7 +272,6 @@ void print_json_address_name(json_t *element, int indent,int num) {
 
 void print_json_road_addr(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].road_address_name,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -285,7 +279,6 @@ void print_json_road_addr(json_t *element, int indent,int num) {
 
 void print_json_x(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].x,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -293,7 +286,6 @@ void print_json_x(json_t *element, int indent,int num) {
 
 void print_json_y(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].y,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -301,14 +293,12 @@ void print_json_y(json_t *element, int indent,int num) {
 
 void print_json_place_url(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].place_url,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
 
 void print_json_distance(json_t *element, int indent,int num) {
         print_json_indent(indent);
-//      sprintf(test,"%s",json_string_value(element));
         strcpy(list[num].distance,json_string_value(element));
         printf("JSON String test: \"%s\"\n", json_string_value(element));
 }
@@ -360,10 +350,6 @@ void print_json_null(json_t *element, int indent) {
         printf("JSON Null\n");
 }
 
-/*
- *  * Parse text into a JSON object. If text is valid JSON, returns a
- *   * json_t structure, otherwise prints and error and returns null.
- *    */
 
 json_t *load_json(const char *text) {
         json_t *root;
@@ -378,23 +364,6 @@ json_t *load_json(const char *text) {
                 return (json_t *)0;
         }
 }
-
-/*
- *  * Print a prompt and return (by reference) a null-terminated line of
- *   * text.  Returns NULL on eof or some error.
- *    */
-/*
-char *read_line(char *line, int max_chars) {
-        printf("Type some JSON > ");
-        fflush(stdout);
-        return fgets(line, max_chars, stdin);
-}
-
-*/
-
-/* ================================================================
- *  * main
- *   */
 
 char str[4096];
 char *temp;
@@ -413,7 +382,7 @@ int main(int argc,char *argv[]){
 
         if ( argc < 4 )
         {
-                fprintf( stderr, "파라매터 값이 입력되지 않았습니다.\n <url> <keyword> <API key>  \n" );
+                fprintf( stderr, "파라매터 값이 입력되지 않았습니다.\n <url> <keyword> <API key>  \n ex) ./decode dapi.kakao.com eluon f981f957a2262e02fdb05cee92cc99b5\n" );
                 return 1;
         }
 
@@ -433,11 +402,7 @@ int main(int argc,char *argv[]){
         memset(&server_addr, 0, sizeof(server_addr));
         server_addr.sin_family=AF_INET;
         server_addr.sin_addr =*((struct in_addr *)he->h_addr);
-        //server_addr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr *)*he->h_addr_list));
-        /*
-           memcpy(haddr,he->h_addr,he->h_length);
-           server_addr.sin_addr.s_addr=inet_addr(haddr)
-           */
+
         server_addr.sin_port=htons(port);
 
         if(connect(s,(struct sockaddr *) &server_addr,sizeof(server_addr)) ==-1 ) {
@@ -455,88 +420,67 @@ int main(int argc,char *argv[]){
 
 
         while((n=read(s,buf,BUF_LEN))>0){
-                printf("%s",buf);
+        //      printf("%s",buf);
 
                 char* temp = strstr(buf,"{");
                 if(temp){
                         isexist=1;
                 }
                 if(isexist==1){
-                strcat(str,buf);
-                }
-
-                        //temp = strtok_r(buf,"{",&str);
+                        strcat(str,buf);
                 }
 
 
-                char *temp = strstr(str,"{");
-                printf("\n\n\n\n\n\n\n\n\n\n");
-                printf("================  JSON DATA  ====================\n");
-
-                printf("%s\n", temp);         //자른 문자 출력
-                printf("\n\n\n\n\n\n\n\n\n\n");
-
-                length = strlen(str);
-/*
-                printf("\n\n\n\n\n\n\n\n\n\n");
-                printf("================  ptr  ====================\n");
-
-                printf("%s\n",ptr);
-*/
-
-                /*              for(j=0;j<length;j++){
-
-                //       parse text into JSON structure
-
-                        json_t *root = load_json(str);
-
-                        if (root) {
-                //               print and release the JSON structure
-
-                print_json(root);
-                                json_decref(root);
-                        }
-
-                }
-*/
-
-
-                root = json_loads( temp, 0, &error );
-                if ( !root )
-                {
-                            fprintf( stderr, "error: on line %d: %s\n", error.line, error.text );
-                                    return 1;
-                }
-
-                const char *key;
-                json_t *value;
-
-                void *iter = json_object_iter( root );
-                while( iter )
-                {
-                            key = json_object_iter_key(iter);
-                            value = json_object_iter_value(iter);
-
-                            //printf("Key: %s, Value: %f\n", key, json_real_value(value) );
-
-                            iter = json_object_get(root, "keyname");
-                }
-
-                print_json(root);
-
-
-                printf("\n 알고싶은 key 정보를 입력하세요 \n");
-                scanf("%s",&querykey);
-
-                int i;
-                for(i=0;i<3;i++){
-                printf("value값: %s\n",list[i].x);
-                }
-
-
-                json_decref(root);
-
-                memset(buf,0,sizeof(buf));
-                memset(str,0,sizeof(str));
-                close(s);
         }
+
+
+        char *temp = strstr(str,"{");
+        printf("\n\n\n\n\n\n\n\n\n\n");
+        printf("================  JSON DATA  ====================\n");
+
+        printf("%s\n", temp);         //자른 문자 출력
+        printf("\n\n\n\n\n\n\n\n\n\n");
+
+        length = strlen(str);
+
+
+
+        root = json_loads( temp, 0, &error );
+        if ( !root )
+        {
+                fprintf( stderr, "error: on line %d: %s\n", error.line, error.text );
+                return 1;
+        }
+
+        const char *key;
+        json_t *value;
+
+        void *iter = json_object_iter( root );
+        while( iter )
+        {
+                key = json_object_iter_key(iter);
+                value = json_object_iter_value(iter);
+
+
+                iter = json_object_get(root, "keyname");
+        }
+
+        print_json(root);
+
+
+        printf("\n알고싶은 key 정보를 입력하세요 \n");
+        scanf("%s",&querykey);
+
+        int i;
+        if(strcmp(querykey,"x")==0){
+                for(i=0;i<3;i++){
+                        printf("value값: %s\n",list[i].x);
+                }
+        }
+
+        json_decref(root);
+
+        memset(buf,0,sizeof(buf));
+        memset(str,0,sizeof(str));
+        close(s);
+}

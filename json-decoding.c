@@ -22,6 +22,10 @@
 int isexist =0;
 int j;
 int length;
+int docnum = 3;
+char* s;
+char* querykey;
+int querynum;
 
 typedef struct Document_t {
         char        id                  [DEFAULT_SIZE]  ;
@@ -38,6 +42,9 @@ typedef struct Document_t {
         char        distance            [DEFAULT_SIZE]  ;
 } Document ;
 
+
+Document list[3];
+
 typedef struct Region_t {
         char        region              [DEFAULT_SIZE]  ;
 } Region ;
@@ -49,15 +56,16 @@ typedef struct SameName_t {
 } SameName ;
 
 typedef struct Meta_t {
-        int         total_count                                              ;
-        int         pageable_count                                           ;
-        short       is_end                                                   ;
-        SameName    same_name                                                ;
+        int         total_count                                                 ;
+        int         pageable_count                                              ;
+        short       is_end                                                              ;
+        SameName    same_name                                                   ;
 } Meta ;
 
 typedef struct DataSet_t {
         Document    documents           [COMM_MAX]              ;
-        Meta        meta                                                     ;
+        //Meta        meta                                                              ;
+        int                     objectnum                                                       ;
 } DataSet ;
 
 
@@ -75,6 +83,27 @@ void print_json_real(json_t *element, int indent);
 void print_json_true(json_t *element, int indent);
 void print_json_false(json_t *element, int indent);
 void print_json_null(json_t *element, int indent);
+void decoding(const char *key, json_t *value,int indent,int listnum);
+
+//decode struct member
+
+void print_json_id(json_t *element, int indent,int num);
+void print_json_place_name(json_t *element, int indent,int num);
+void print_json_group_code(json_t *element, int indent,int num);
+void print_json_group_name(json_t *element, int indent,int num) ;
+void print_json_category_name(json_t *element, int indent,int num) ;
+void print_json_phone(json_t *element, int indent,int num) ;
+void print_json_address_name(json_t *element, int indent,int num);
+void print_json_road_addr(json_t *element, int indent,int num);
+void print_json_x(json_t *element, int indent,int num) ;
+void print_json_y(json_t *element, int indent,int num);
+void print_json_place_url(json_t *element, int indent,int num);
+void print_json_distance(json_t *element, int indent,int num);
+
+
+
+
+
 
 void print_json(json_t *root) { print_json_aux(root, 0); }
 
@@ -110,6 +139,7 @@ void print_json_aux(json_t *element, int indent) {
         }
 }
 
+
 void print_json_indent(int indent) {
         int i;
         for (i = 0; i < indent; i++) {
@@ -119,6 +149,8 @@ void print_json_indent(int indent) {
 
 const char *json_plural(size_t count) { return count == 1 ? "" : "s"; }
 
+int listnum = 0;
+
 void print_json_object(json_t *element, int indent) {
         size_t size;
         const char *key;
@@ -127,13 +159,161 @@ void print_json_object(json_t *element, int indent) {
         print_json_indent(indent);
         size = json_object_size(element);
 
-        printf("JSON Object of %lld pair%s:\n", (long long)size, json_plural(size));
+        printf("JSON Object of %d pair%s:\n", (long long)size, json_plural(size));
         json_object_foreach(element, key, value) {
                 print_json_indent(indent + 2);
                 printf("JSON Key: \"%s\"\n", key);
+                decoding(key,value,indent,listnum);
                 print_json_aux(value, indent + 2);
         }
+        listnum++;
 }
+
+void decoding(const char *key, json_t *value,int indent,int listnum){
+
+                if(strcmp(key,"id")== 0){
+                        print_json_id(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"place_name")== 0){
+                        print_json_place_name(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"category_group_code")== 0){
+                        print_json_group_code(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"category_group_name")== 0){
+                        print_json_group_name(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"category_name")== 0){
+                        print_json_category_name(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"phone")== 0){
+                        print_json_phone(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"address_name")== 0){
+                        print_json_address_name(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"road_address_name")== 0){
+                        print_json_road_addr(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"x")== 0){
+                        print_json_x(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"y")== 0){
+                        print_json_y(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"place_url")== 0){
+                        print_json_place_url(value,indent + 2,listnum);
+                }
+
+                if(strcmp(key,"distance")== 0){
+                        print_json_distance(value,indent + 2,listnum);
+                }
+
+
+}
+
+void print_json_id(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].id,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+void print_json_place_name(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].place_name,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_group_code(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].category_group_code,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_group_name(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].category_group_name,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+void print_json_category_name(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].category_name,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+void print_json_phone(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].phone,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_address_name(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].address_name,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_road_addr(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].road_address_name,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_x(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].x,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_y(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].y,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
+void print_json_place_url(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].place_url,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+void print_json_distance(json_t *element, int indent,int num) {
+        print_json_indent(indent);
+//      sprintf(test,"%s",json_string_value(element));
+        strcpy(list[num].distance,json_string_value(element));
+        printf("JSON String test: \"%s\"\n", json_string_value(element));
+}
+
+
 
 void print_json_array(json_t *element, int indent) {
         size_t i;
@@ -141,6 +321,7 @@ void print_json_array(json_t *element, int indent) {
         print_json_indent(indent);
 
         printf("JSON Array of %lld element%s:\n", (long long)size, json_plural(size));
+        docnum = (long long)size;
         for (i = 0; i < size; i++) {
                 print_json_aux(json_array_get(element, i), indent + 2);
         }
@@ -342,6 +523,17 @@ int main(int argc,char *argv[]){
                 }
 
                 print_json(root);
+
+
+                printf("\n 알고싶은 key 정보를 입력하세요 \n");
+                scanf("%s",&querykey);
+
+                int i;
+                for(i=0;i<3;i++){
+                printf("value값: %s\n",list[i].x);
+                }
+
+
                 json_decref(root);
 
                 memset(buf,0,sizeof(buf));
